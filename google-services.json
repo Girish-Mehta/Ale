@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "338071318222",
+    "firebase_url": "https://alefirebaseproject.firebaseio.com",
+    "project_id": "alefirebaseproject",
+    "storage_bucket": "alefirebaseproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:338071318222:android:ea92b0cd10b052e6",
+        "android_client_info": {
+          "package_name": "com.cameo.root.ale"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "338071318222-3p7pv0ku6hh8fj7etos0eqndcqk2k3mo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cameo.root.ale",
+            "certificate_hash": "F41D18529F5940D8707F62B7CC614212AA326931"
+          }
+        },
+        {
+          "client_id": "338071318222-m8prvg2g2jioib36bp83vhp11fe0qf35.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBfRN203MgOuY0c94OrnKbDULg-sArJD4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "338071318222-m8prvg2g2jioib36bp83vhp11fe0qf35.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
