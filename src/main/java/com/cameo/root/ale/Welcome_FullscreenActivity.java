@@ -122,7 +122,7 @@ public class Welcome_FullscreenActivity extends AppCompatActivity {
                 sharedPreferences = getSharedPreferences("SharedPrefData",MODE_PRIVATE);
                 if (sharedPreferences.getBoolean("pref_Flag", false))
                 {
-                    userActivity();
+                    userPannel();
                 }
                 else
                 {
@@ -156,9 +156,9 @@ public class Welcome_FullscreenActivity extends AppCompatActivity {
 
     }
 
-    private void userActivity()
+    private void userPannel()
     {
-        Intent intent = new Intent(this,userPlat.class);
+        Intent intent = new Intent(this,userPannel.class);
         startActivity(intent);
 
     }
