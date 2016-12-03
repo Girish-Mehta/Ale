@@ -42,6 +42,7 @@ public class EmailPasswordActivity extends AppCompatActivity implements GoogleAp
 
     private static final String TAG = "EmailPassword";
     private int flag;
+    boolean check;
 
     //Declare the FirebaseAuth and AuthStateListener objects.
     private FirebaseAuth mAuth;
@@ -79,6 +80,8 @@ public class EmailPasswordActivity extends AppCompatActivity implements GoogleAp
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emailpassword);
         flag = 0;
+
+        check = true;
 
         //Views
         mStatusTextView = (TextView) findViewById(R.id.status);
@@ -396,6 +399,16 @@ public class EmailPasswordActivity extends AppCompatActivity implements GoogleAp
 
     public void onBackPressed()
     {
+        if(check == true)
+        {
+            Toast.makeText(EmailPasswordActivity.this,"Press back again to Exit", Toast.LENGTH_SHORT).show();
+            check = false;
+        }
+        else
+        {
+            check = true;
+            EmailPasswordActivity.this.moveTaskToBack(true);
+        }
     }
 
     private void nextActivity()

@@ -4,8 +4,8 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorDark</item>
-        <item name="colorPrimaryDark">@color/colorDark</item>
-        <item name="colorAccent">@color/colorDark</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <style name="FullscreenTheme" parent="AppTheme">
@@ -23,12 +23,12 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:colorBackground">@color/colorAccent</item>
     </style>
 
     <style name="ActionBar">
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">false</item>
-        <item name="android:colorBackground">@color/white</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

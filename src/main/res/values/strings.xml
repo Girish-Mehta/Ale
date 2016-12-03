@@ -16,9 +16,9 @@
     <string name="error_field_required">This field is required</string>
     <string name="loading">Loading…</string>
     <string name="sent">Password reset email Sent</string>
-    <string name="sign_in">Sign In</string>
+    <string name="sign_in">Take me to table</string>
     <string name="signed_out">Signed Out</string>
-    <string name="sign_up">Sign Up</string>
+    <string name="sign_up">Register my Hunger</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>

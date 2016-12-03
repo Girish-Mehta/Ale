@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -14,10 +15,13 @@ import com.google.firebase.auth.FirebaseAuth;
 public class userPannel extends AppCompatActivity {
 
     TextView outSign;
-
+    boolean check;
     private GoogleApiClient mGoogleApiClient;
-
     private FirebaseAnalytics mFirebaseAnalytics;
+//    private RecyclerView mRecyclerView;
+//    private RecyclerView.Adapter mAdapter;
+//    private RecyclerView.LayoutManager mLayoutManager;
+
 
     SharedPreferences sharedPreferences;
 
@@ -25,6 +29,8 @@ public class userPannel extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_pannel);
+
+        check = true;
 
         outSign = (TextView)findViewById(R.id.SignOut);
         outSign.setOnClickListener(new View.OnClickListener(){
@@ -43,8 +49,21 @@ public class userPannel extends AppCompatActivity {
 
         });
 
-        // Obtain the FirebaseAnalytics instance.
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+//        // Obtain the FirebaseAnalytics instance.
+//        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+//
+//        // use this setting to improve performance if you know that changes
+//        // in content do not change the layout size of the RecyclerView
+//        mRecyclerView.setHasFixedSize(true);
+//
+//        // use a linear layout manager
+//        mLayoutManager = new LinearLayoutManager(this);
+//        mRecyclerView.setLayoutManager(mLayoutManager);
+//
+//        // specify an adapter (see also next example)
+//        mAdapter = new RecyclerView.Adapter(myDataset);
+//        mRecyclerView.setAdapter(mAdapter);
+
     }
 
     public void nextActivity()
@@ -67,5 +86,15 @@ public class userPannel extends AppCompatActivity {
 
     public void onBackPressed()
     {
+        if(check == true)
+        {
+            Toast.makeText(userPannel.this,"Press back again to Exit", Toast.LENGTH_SHORT).show();
+            check = false;
+        }
+        else
+        {
+            check = true;
+            userPannel.this.moveTaskToBack(true);
+        }
     }
 }
