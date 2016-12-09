@@ -4,13 +4,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class userPannel extends AppCompatActivity {
 
@@ -18,9 +17,10 @@ public class userPannel extends AppCompatActivity {
     boolean check;
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAnalytics mFirebaseAnalytics;
-//    private RecyclerView mRecyclerView;
-//    private RecyclerView.Adapter mAdapter;
-//    private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private static String LOG_TAG = "CardViewActivity";
 
 
     SharedPreferences sharedPreferences;
@@ -32,22 +32,22 @@ public class userPannel extends AppCompatActivity {
 
         check = true;
 
-        outSign = (TextView)findViewById(R.id.SignOut);
-        outSign.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view)
-            {
-                // Firebase sign out
-                FirebaseAuth.getInstance().signOut();
-                sharedPreferences = getSharedPreferences("SharedPrefData",MODE_PRIVATE);
-                SharedPreferences.Editor editor= sharedPreferences.edit();
-                editor.putBoolean("pref_Flag",false);
-                editor.commit();
-                nextActivity();
 
-            }
-
-        });
+//        outSign = (TextView) findViewById(R.id.SignOut);
+//        outSign.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // Firebase sign out
+//                FirebaseAuth.getInstance().signOut();
+//                sharedPreferences = getSharedPreferences("SharedPrefData", MODE_PRIVATE);
+//                SharedPreferences.Editor editor = sharedPreferences.edit();
+//                editor.putBoolean("pref_Flag", false);
+//                editor.commit();
+//                nextActivity();
+//
+//            }
+//
+//        });
 
 //        // Obtain the FirebaseAnalytics instance.
 //        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
@@ -63,6 +63,7 @@ public class userPannel extends AppCompatActivity {
 //        // specify an adapter (see also next example)
 //        mAdapter = new RecyclerView.Adapter(myDataset);
 //        mRecyclerView.setAdapter(mAdapter);
+
 
     }
 
@@ -97,4 +98,5 @@ public class userPannel extends AppCompatActivity {
             userPannel.this.moveTaskToBack(true);
         }
     }
+
 }

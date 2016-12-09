@@ -1,49 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_user_pannel"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/userpage"
     tools:context="com.cameo.root.ale.userPannel">
 
-    <HorizontalScrollView
-        android:foregroundGravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <!-- A CardView that contains a TextView -->
-        <android.support.v7.widget.CardView
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/card_view"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_height="wrap_content"
-            card_view:cardCornerRadius="4dp">
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="___\n___\n___"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:padding="10sp"-->
+        <!--android:textSize="5sp"-->
+        <!--android:textStyle="bold"-->
+        <!--android:background="@drawable/textview_design"-->
+        <!--android:layout_margin="10dp"/>-->
 
-            <TextView
-                android:id="@+id/info_text"
-                android:layout_margin="120dp"
-                android:layout_width="match_parent"
-                android:text="Card View"
-                android:layout_height="match_parent" />
-        </android.support.v7.widget.CardView>
-    </HorizontalScrollView>
-
-    <TextView
+    <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sign Out"
-        android:background="@color/colorDark"
-        android:textColor="@color/white"
-        android:textAlignment="center"
-        android:layout_alignParentBottom="true"
-        android:textSize="25sp"
-        android:paddingTop="3dp"
-        android:id="@+id/SignOut"
-        android:paddingBottom="3dp"
-        android:layout_alignParentStart="true"
-        android:clickable="true"
-        android:layout_alignParentLeft="true" />
+        android:columnCount="2"
+        android:rowCount="2"
+        android:padding="70dp"
+        android:background="@color/black_overlay"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            android:background="@color/white"
+            android:id="@+id/user_profile"/>
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            android:background="@color/white"
+            android:id="@+id/menu"/>
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            android:background="@color/white"
+            android:id="@+id/ratings"/>
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            android:background="@color/white"
+            android:id="@+id/contact"/>
+
+    </GridLayout>
+
+    <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Made in India with Love and Hunger"
+    android:textSize="15sp"
+    android:alpha="30"
+    android:fontFamily="cursive"
+    android:background="@color/black_overlay"
+    android:textColor="@color/white"
+    android:layout_alignParentBottom="true"
+    android:textAlignment="center" />
 
 </RelativeLayout>
