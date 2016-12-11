@@ -22,6 +22,9 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="proof"><u>Click to upload your proof</u></string>
+    <string name="proof_content">A proof can be one of the following\n1. Aadhar Card\n2. Driving License\n3. Passport Copy\n4. Pan Card\n\n*Note- If you skip this step then you will later have to upload your proof document to be able to make any purchase</string>
+    <string name="skip"><u>Skip</u></string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

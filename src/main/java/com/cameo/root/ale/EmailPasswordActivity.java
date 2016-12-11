@@ -12,11 +12,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,16 +39,19 @@ public class EmailPasswordActivity extends AppCompatActivity implements GoogleAp
     private int flag;
     boolean check;
 
+    private TextView status;
+    private TextView register;
+    private TextView proof;
+    private TextView step;
+    private TextView proof_content;
+    private TextView skip;
+
     //Declare the FirebaseAuth and AuthStateListener objects.
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private static final int RC_SIGN_IN = 1001;
 
     private GoogleApiClient mGoogleApiClient;
-
-    private EditText mEmailField;
-    private EditText mPasswordField;
-    private TextView mStatusTextView;
 
 
     @VisibleForTesting
@@ -77,55 +77,17 @@ public class EmailPasswordActivity extends AppCompatActivity implements GoogleAp
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emailpassword);
+
+        status = (TextView) findViewById(R.id.status);
+        register = (TextView) findViewById(R.id.register);
+        proof = (TextView)findViewById(R.id.proof);
+        step = (TextView) findViewById(R.id.step);
+        proof_content = (TextView)findViewById(R.id.proof_content);
+        skip = (TextView) findViewById(R.id.skip);
+
+
         flag = 0;
-
         check = true;
-
-        //Views
-        mStatusTextView = (TextView) findViewById(R.id.status);
-        mEmailField = (EditText)findViewById(R.id.email);
-        mPasswordField = (EditText) findViewById(R.id.pass);
-
-
-        //Generate Simple Sign In Action
-        TextView signIn_Action = (TextView)findViewById(R.id.sign_in);
-        signIn_Action.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view)
-            {
-                String email;
-                String passw;
-                email = mEmailField.getText().toString();
-                passw = mPasswordField.getText().toString();
-                signIn(email,passw);
-            }
-        });
-
-        //Generate Simple Sign Up Action
-        TextView signUp_Action = (TextView)findViewById(R.id.sign_up);
-        signUp_Action.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view)
-            {
-                String email;
-                String passw;
-                email = mEmailField.getText().toString();
-                passw = mPasswordField.getText().toString();
-                createAccount(email,passw);
-            }
-        });
-
-        //Generate Forgot Password Action
-        TextView forgot_Action = (TextView)findViewById(R.id.forgot_pass);
-        forgot_Action.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view)
-            {
-                String email;
-                email = mEmailField.getText().toString();
-                forgotPassword(email);
-            }
-        });
 
         //initialize the FirebaseAuth instance and the AuthStateListener
         //method so you can track whenever the user signs in or out.
@@ -159,18 +121,43 @@ public class EmailPasswordActivity extends AppCompatActivity implements GoogleAp
                 .build();
 
         //Generate Google Sign In Action
-        LinearLayout g_login = (LinearLayout)findViewById(R.id.g_login);
-        g_login.setOnClickListener(new View.OnClickListener(){
+        register = (TextView) findViewById(R.id.register);
+        register.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view)
             {
-                Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-                startActivityForResult(signInIntent, RC_SIGN_IN);
+//                Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+//                startActivityForResult(signInIntent, RC_SIGN_IN);
+                testFunction();
             }
         });
 
+        skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nextActivity();
+            }
+        });
+
+        proof.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(EmailPasswordActivity.this, "Upload unavailable", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
+
+
+    private void testFunction()
+    {
+        register.setVisibility(View.GONE);
+        proof.setVisibility(View.VISIBLE);
+        step.setText("Step-2");
+        proof_content.setVisibility(View.VISIBLE);
+        skip.setVisibility(View.VISIBLE);
+    }
+
 
     // [START auth_with_google]
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
@@ -196,8 +183,14 @@ public class EmailPasswordActivity extends AppCompatActivity implements GoogleAp
                         }
                         else
                         {
-                            Toast.makeText(EmailPasswordActivity.this, R.string.auth_success,
-                                    Toast.LENGTH_SHORT).show();
+
+                            //show user name here
+                            // status.setText();
+                            register.setVisibility(View.GONE);
+                            proof.setVisibility(View.VISIBLE);
+                            step.setText("Step-2");
+                            proof_content.setVisibility(View.VISIBLE);
+                            skip.setVisibility(View.VISIBLE);
                         }
                         // [START_EXCLUDE]
                         hideProgressDialog();
@@ -240,160 +233,7 @@ public class EmailPasswordActivity extends AppCompatActivity implements GoogleAp
         hideProgressDialog();
     }
 
-    private void createAccount(String email, String password) {
-        Log.d(TAG, "createAccount:" + email);
-        if (!validateForm()) {
-            return;
-        }
 
-        showProgressDialog();
-
-        // [START create_user_with_email]
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
-
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            mStatusTextView.setText(R.string.auth_failed);
-                            Toast.makeText(EmailPasswordActivity.this, R.string.auth_failed,
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                        else
-                        {
-                            mStatusTextView.setText(R.string.auth_success);
-                            flag++;
-                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-                            user.sendEmailVerification()
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                Log.d(TAG, "Email sent.");
-                                            }
-                                        }
-                                    });
-                            sharedPreferences = getSharedPreferences("SharedPrefData",MODE_PRIVATE);
-                            SharedPreferences.Editor editor= sharedPreferences.edit();
-                            editor.putBoolean("pref_Flag",true);
-                            editor.commit();
-
-                        }
-                        // [START_EXCLUDE]
-                        hideProgressDialog();
-                        if(flag != 0) {
-                            nextActivity();
-                        }
-                        // [END_EXCLUDE]
-                    }
-                });
-        // [END create_user_with_email]
-    }
-
-    private void signIn(String email, String password) {
-        Log.d(TAG, "signIn:" + email);
-        if (!validateForm()) {
-            return;
-        }
-
-        showProgressDialog();
-
-        // [START sign_in_with_email]
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
-
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            Log.w(TAG, "signInWithEmail:failed", task.getException());
-                            Toast.makeText(EmailPasswordActivity.this, R.string.auth_failed,
-                                    Toast.LENGTH_SHORT).show();
-                            mStatusTextView.setText(R.string.auth_failed);
-                        }
-                        else
-                        {
-                            mStatusTextView.setText(R.string.auth_success);
-                            Log.w(TAG, "signInWithEmail:success", task.getException());
-                            flag++;
-                            sharedPreferences = getSharedPreferences("SharedPrefData",MODE_PRIVATE);
-                            SharedPreferences.Editor editor= sharedPreferences.edit();
-                            editor.putBoolean("pref_Flag",true);
-                            editor.commit();
-                        }
-                        hideProgressDialog();
-                        if(flag != 0) {
-                            nextActivity();
-                        }
-                        // [END_EXCLUDE]
-                    }
-                });
-        // [END sign_in_with_email]
-    }
-
-    private void forgotPassword(String email)
-    {
-        if (!validateEmail()) {
-            return;
-        }
-
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-
-        auth.sendPasswordResetEmail(email)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "Email sent.");
-                            Toast.makeText(EmailPasswordActivity.this, R.string.sent,Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-    }
-
-    private boolean validateForm() {
-        boolean valid = true;
-
-        String email = mEmailField.getText().toString();
-        if (TextUtils.isEmpty(email)) {
-            mEmailField.setError("Required.");
-            valid = false;
-        } else {
-            mEmailField.setError(null);
-        }
-
-        String password = mPasswordField.getText().toString();
-        if (TextUtils.isEmpty(password)) {
-            mPasswordField.setError("Required.");
-            valid = false;
-        } else {
-            mPasswordField.setError(null);
-        }
-
-        return valid;
-    }
-
-    private boolean validateEmail() {
-        boolean valid = true;
-
-        String email = mEmailField.getText().toString();
-        if (TextUtils.isEmpty(email)) {
-            mEmailField.setError("Required.");
-            valid = false;
-        } else {
-            mEmailField.setError(null);
-        }
-
-        return valid;
-    }
 
     public void onBackPressed()
     {
@@ -411,12 +251,6 @@ public class EmailPasswordActivity extends AppCompatActivity implements GoogleAp
 
     private void nextActivity()
     {
-        if(flag!=0)
-        {
-            flag = 0;
-        }
-        else {}
-        //Replace with userPlat.class to switch
         Intent intent = new Intent(this,userPannel.class);
         startActivity(intent);
     }
@@ -429,4 +263,5 @@ public class EmailPasswordActivity extends AppCompatActivity implements GoogleAp
         Log.d(TAG, "onConnectionFailed:" + connectionResult);
         Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
     }
+
 }
